@@ -1,4 +1,4 @@
-describe('Record and Play Hubtel', () => {
+describe('Hubtel test-2', () => {
     // Check if the download icons with links work in the footer
     it('Footer-Download-link-tests', function() {
       cy.visit('https://blog.hubtel.com/');
