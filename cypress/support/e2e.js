@@ -19,3 +19,8 @@ import "allure-cypress";
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+const allure = require('allure-cypress');
+
+allure.title('Hubtel Blog Test Report');
+allure.name('Hubtel Report');
