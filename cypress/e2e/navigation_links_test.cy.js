@@ -1,4 +1,4 @@
-describe('Record and Play Hubtel', () => {
+describe('Hubtel test-4', () => {
     // Navigation Links Test: Click on each navigation link
     it('Navigation Links Test', () => {
       cy.visit('https://blog.hubtel.com/');
