@@ -66,6 +66,30 @@ npm run allure:report
 
 This will generate a new Allure report and open it in your default browser.
 
+## CI/CD Pipeline
+
+This project uses GitHub Actions for continuous integration and continuous deployment. The workflow file is located at `.github/workflows/ci.yml`.
+
+### Workflow Overview
+
+The workflow is triggered on the following events:
+- Push to the `master` branch
+- Pull requests to the `master` branch
+
+
+The workflow includes the following steps:
+1. **Checkout Repository**: Checks out the code from the repository.
+2. **Set up Node.js**: Sets up the Node.js environment.
+3. **Install Dependencies**: Installs the required dependencies.
+4. **Download Allure History Artifact**: Downloads the previous Allure report history if it exists.
+5. **Run Cypress Tests**: Runs the Cypress tests.
+6. **Generate Allure Report**: Generates the Allure report.
+7. **Save Allure History**: Saves the Allure report history.
+8. **Upload Allure History Artifact**: Uploads the Allure report history.
+9. **Deploy Allure Report to GitHub Pages**: Deploys the Allure report to GitHub Pages.
+
+
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
