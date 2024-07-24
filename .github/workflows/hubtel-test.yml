@@ -1,36 +1,71 @@
-# This is a basic workflow to help you get started with Actions
+# This is a workflow for running Cypress tests, managing Allure report history, and deploying the Allure report
 
 name: CI
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "master" branch
+  # Triggers the workflow on push or pull request events for the "master" branch
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-
+  
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+      # Checks out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      # Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      # Install dependencies
+      - name: Install Dependencies
+        run: npm install
+
+      # Download Allure History Artifact if it exists
+      - name: Download Allure History Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: allure-results-history
+          path: allure-results-history
+        continue-on-error: true
+
+      # Run Cypress tests
+      - name: Run Cypress Tests
+        run: npm run test
+
+      # Generate Allure report
+      - name: Generate Allure Report
+        run: npm run allure:report
+
+      # Save Allure history
+      - name: Save Allure History
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          echo "Saving Allure history..."
+          mkdir -p allure-results-history
+          cp -r allure-results/history allure-results-history
+
+      # Upload Allure History Artifact
+      - name: Upload Allure History Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-results-history
+          path: allure-results-history
+
+      # Deploy Allure report to GitHub Pages
+      - name: Deploy Allure Report to GitHub Pages
+        run: npm run deploy
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub Actions token for deployment
