@@ -1,4 +1,4 @@
-describe('Record and Play Hubtel', () => {
+describe('Hubtel test-1', () => {
     // Article Component Validation: Validate the presence of required elements in each article component
     it('Article Component Validation', function() {
       cy.visit('https://blog.hubtel.com/');
