@@ -2,7 +2,7 @@
 ---
 
 # Cypress End-to-End Testing for Hubtel Blog
-![Hubtel](img/Hubtel-Primary.jpeg)
+![Hubtel](img/Hubtel-Primary.jpg)
 
 This repository contains end-to-end tests for the Hubtel Blog using Cypress. The tests include navigation link checks, main article validation, article component validation, and footer download link tests.
 
